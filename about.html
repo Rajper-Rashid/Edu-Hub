@@ -1,0 +1,281 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Muhammad Rashid</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0f0c29;
+            --secondary-color: #302b63;
+            --accent-color: #00f2ff;
+            --neon-blue: #00f2ff;
+            --neon-pink: #ff2d75;
+            --neon-green: #00ff88;
+        }body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: #ffffff;
+        line-height: 1.6;
+    }
+
+    a.back-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        background: rgba(0, 242, 255, 0.1);
+        padding: 10px 20px;
+        border-radius: 50px;
+        text-decoration: none;
+        color: var(--neon-blue);
+        font-weight: 600;
+        box-shadow: 0 0 10px var(--neon-blue);
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .back-btn::before {
+        content: '←';
+        font-size: 1.2rem;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 80px 20px;
+    }
+
+    h1 {
+        font-size: 3rem;
+        margin: 0;
+        background: linear-gradient(90deg, var(--neon-blue), var(--neon-green));
+        -webkit-background-clip: text;
+        color: transparent;
+        text-align: center;
+        text-shadow: 0 0 10px var(--neon-blue);
+    }
+
+    .tagline {
+        font-size: 1.2rem;
+        color: #ccc;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .profile-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        margin-bottom: 60px;
+        align-items: center;
+    }
+
+    .profile-pic {
+        flex: 1;
+        min-width: 300px;
+        text-align: center;
+    }
+
+    .profile-pic img {
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid var(--neon-pink);
+        box-shadow: 0 0 30px var(--neon-pink);
+    }
+
+    .profile-info {
+        flex: 2;
+        min-width: 300px;
+    }
+
+    .bio, .skill-card, .achievement {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(15px);
+        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
+        padding: 30px;
+        margin-bottom: 40px;
+        transition: all 0.3s ease;
+    }
+
+    .bio:hover, .skill-card:hover, .achievement:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 25px var(--neon-blue);
+    }
+
+    .skills-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+    }
+
+    .skill-card h3 {
+        color: var(--neon-green);
+    }
+
+    .skill-card h3::before {
+        content: '✓';
+        color: var(--neon-blue);
+        font-size: 1.5rem;
+        margin-right: 10px;
+    }
+
+    .testimonials {
+        background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
+        padding: 50px;
+        border-radius: 15px;
+        color: white;
+        box-shadow: 0 0 30px var(--neon-pink);
+    }
+
+    .testimonial {
+        font-style: italic;
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+    }
+
+    .testimonial-author {
+        font-weight: 600;
+        text-align: right;
+    }
+
+    .achievements {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .achievement-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--neon-blue);
+        margin: 10px 0;
+        text-shadow: 0 0 10px var(--neon-blue);
+    }
+
+    h2 {
+        font-size: 2rem;
+        color: var(--neon-pink);
+        text-shadow: 0 0 10px var(--neon-pink);
+        border-left: 4px solid var(--neon-pink);
+        padding-left: 15px;
+        margin-bottom: 20px;
+    }
+
+    ul li {
+        margin-bottom: 10px;
+    }
+
+    @media (max-width: 768px) {
+        .profile-section {
+            flex-direction: column;
+        }
+        .profile-pic, .profile-info {
+            min-width: 100%;
+        }
+        h1 {
+            font-size: 2.2rem;
+        }
+    }
+</style>
+
+</head>
+<body>
+    <!-- Full HTML content remains same as your shared code -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <a href="dashboard.html" class="back-btn"></a>
+    
+    <div class="container">
+        <header>
+            <h1>Muhammad Rashid</h1>
+            <p class="tagline">Versatile IT Professional | Web & Application Developer | Tech Innovator</p>
+        </header>
+        
+        <div class="profile-section">
+            <div class="profile-pic">
+                <img src="https://via.placeholder.com/300" alt="Muhammad Rashid">
+            </div>
+            <div class="profile-info">
+                <div class="bio">
+                    <h2>About Me</h2>
+                    <p>A highly skilled and passionate IT professional with a strong academic background and extensive practical experience in web and application development. My journey in technology began with a deep curiosity about how digital systems work, which evolved into a successful career creating innovative solutions.</p>
+                    
+                    <p>With a Graduation degree and Diploma in Information Technology, I combine theoretical knowledge with hands-on expertise to deliver exceptional digital products. My approach blends technical precision with creative problem-solving to build applications that are both powerful and user-friendly.</p>
+                </div>
+                
+                <div class="achievements">
+                    <div class="achievement">
+                        <div class="achievement-number">5+</div>
+                        <div>Years Experience</div>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-number">50+</div>
+                        <div>Projects Completed</div>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-number">100%</div>
+                        <div>Client Satisfaction</div>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-number">10+</div>
+                        <div>Technologies Mastered</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>My Expertise</h2>
+        <div class="skills-section">
+            <div class="skill-card">
+                <h3>Web Development</h3>
+                <p>Full-stack web development with expertise in HTML5, CSS3, JavaScript, and modern frameworks. I create responsive, accessible, and high-performance websites that deliver exceptional user experiences across all devices.</p>
+            </div>
+            <div class="skill-card">
+                <h3>Application Development</h3>
+                <p>Building robust cross-platform applications with clean architecture and intuitive interfaces. My applications are known for their reliability, scalability, and innovative features that solve real-world problems.</p>
+            </div>
+            <div class="skill-card">
+                <h3>Technical Leadership</h3>
+                <p>Guiding development teams with clear technical vision and best practices. I mentor junior developers and establish coding standards that elevate entire projects to professional excellence.</p>
+            </div>
+        </div>
+        
+        <h2>What People Say</h2>
+        <div class="testimonials">
+            <div class="testimonial">
+                "Muhammad Rashid is one of the most talented developers I've worked with. His ability to understand complex requirements and translate them into elegant solutions is truly remarkable. He consistently delivers beyond expectations."
+            </div>
+            <div class="testimonial-author">- Tech Director, ABC Company</div>
+            
+            <div class="testimonial">
+                "Working with Rashid was a game-changer for our project. His technical expertise combined with his creative approach helped us build an application that outperformed all competitors in the market."
+            </div>
+            <div class="testimonial-author">- Product Manager, XYZ Solutions</div>
+        </div>
+        
+        <h2>Professional Philosophy</h2>
+        <div class="bio">
+            <p>I believe that technology should serve humanity by making complex tasks simple and impossible tasks possible. My development approach focuses on:</p>
+            <ul>
+                <li><strong>Clean Code:</strong> Writing maintainable, well-documented code that stands the test of time</li>
+                <li><strong>User-Centric Design:</strong> Creating interfaces that are intuitive and enjoyable to use</li>
+                <li><strong>Performance Optimization:</strong> Ensuring applications are fast and efficient</li>
+                <li><strong>Continuous Learning:</strong> Staying at the forefront of technological advancements</li>
+                <li><strong>Ethical Tech:</strong> Developing solutions that respect user privacy and security</li>
+            </ul>
+            
+            <p>When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or mentoring aspiring developers. I'm passionate about using my skills to create digital solutions that make a positive impact on people's lives.</p>
+        </div>
+    </div>
+</body>
+</html>
