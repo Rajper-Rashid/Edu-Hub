@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Videos</title>
+    <style>
+        :root {
+            --video-color: #00f2ff;
+            --notes-color: #00ff88;
+            --mcqs-color: #ff2d75;
+            --profile-color: #ffeb3b;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+        
+        .back-btn::before {
+            content: '←';
+            font-size: 1.2rem;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+        }
+        
+        .neon-text {
+            text-shadow: 0 0 5px currentColor, 0 0 10px currentColor;
+        }
+        
+        .neon-border {
+            position: relative;
+        }
+        
+        .neon-border::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 2px;
+            background: linear-gradient(45deg, var(--neon-color), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-top: 70px;
+        }
+        
+        header {
+            padding: 30px 0;
+            text-align: center;
+            margin-bottom: 40px;
+            --neon-color: var(--video-color);
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: var(--video-color);
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .video-card {
+            --neon-color: var(--video-color);
+            cursor: pointer;
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .video-thumbnail iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .video-info {
+            padding: 20px;
+        }
+        
+        .video-title {
+            font-weight: 600;
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+            color: var(--video-color);
+        }
+        
+        .video-desc {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+        
+        .add-video {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .add-btn {
+            background: rgba(0, 242, 255, 0.1);
+            color: var(--video-color);
+            border: 1px solid var(--video-color);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
+        }
+        
+        .add-btn:hover {
+            background: rgba(0, 242, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <a href="dashboard.html" class="back-btn"></a>
+    
+    <div class="container">
+        <header class="glass-card neon-border">
+            <h1 class="neon-text">Mathametics Videos</h1>
+            <p>Enhance your Mathametics skills with these educational videos</p>
+        </header>
+        
+        <div class="video-grid" id="videoContainer">
+            <!-- Videos will be added here dynamically -->
+        </div>
+        
+        <div class="add-video">
+            <button class="add-btn glass-card" onclick="addVideo()">+ Add New Video</button>
+        </div>
+    </div>
+
+    <script>
+        // Array to store video data
+        let videos = [
+            {
+                title: "Introduction to English Grammar",
+                url: "https://www.youtube.com/embed/example1",
+                description: "Learn the basics of English grammar in this introductory video."
+            },
+            {
+                title: "Common English Phrases",
+                url: "https://www.youtube.com/embed/example2",
+                description: "Essential phrases for everyday English conversation."
+            }
+        ];
+        
+        // Function to display videos
+        function displayVideos() {
+            const container = document.getElementById('videoContainer');
+            container.innerHTML = '';
+            
+            videos.forEach(video => {
+                const videoCard = document.createElement('div');
+                videoCard.className = 'video-card glass-card neon-border';
+                videoCard.innerHTML = `
+                    <div class="video-thumbnail">
+                        <iframe src="${video.url}" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title neon-text">${video.title}</h3>
+                        <p class="video-desc">${video.description}</p>
+                    </div>
+                `;
+                
+                // Add click event to open in new window
+                videoCard.addEventListener('click', () => {
+                    window.open(video.url.replace('/embed/', '/watch?v='), '_blank', 'noopener,noreferrer');
+                });
+                
+                container.appendChild(videoCard);
+            });
+        }
+        
+        // Function to add new video
+        function addVideo() {
+            const url = prompt("Enter YouTube URL (e.g., https://www.youtube.com/watch?v=abc123):");
+            if (url) {
+                const embedUrl = url.replace('watch?v=', 'embed/');
+                const title = prompt("Enter video title:");
+                const description = prompt("Enter video description:");
+                
+                videos.push({
+                    title: title || "New Video",
+                    url: embedUrl,
+                    description: description || "No description available."
+                });
+                
+                displayVideos();
+            }
+        }
+        
+        // Initial display
+        displayVideos();
+    </script>
+</body>
+</html>

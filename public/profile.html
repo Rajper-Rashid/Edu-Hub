@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+    	   :root {
+            --video-color: #00f2ff;
+            --notes-color: #00ff88;
+            --mcqs-color: #ff2d75;
+            --profile-color: #ffeb3b;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+        
+        .back-btn::before {
+            content: '←';
+            font-size: 1.2rem;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+        }
+        
+        .neon-text {
+            text-shadow: 0 0 5px currentColor, 0 0 10px currentColor;
+        }
+        
+        .neon-border {
+            position: relative;
+        }
+        
+        .neon-border::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 2px;
+            background: linear-gradient(45deg, var(--neon-color), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        /* Common CSS from video_english.html goes here */
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-top: 70px;
+        }
+        
+        header {
+            padding: 30px 0;
+            text-align: center;
+            margin-bottom: 40px;
+            --neon-color: var(--profile-color);
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: var(--profile-color);
+        }
+        
+        .profile-card {
+            --neon-color: var(--profile-color);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 30px;
+            border: 3px solid var(--profile-color);
+            box-shadow: 0 0 20px rgba(255, 235, 59, 0.4);
+        }
+        
+        .profile-info {
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .info-group {
+            margin-bottom: 25px;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+            color: var(--profile-color);
+        }
+        
+        .info-value {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .edit-btn {
+            background: rgba(255, 235, 59, 0.1);
+            color: var(--profile-color);
+            border: 1px solid var(--profile-color);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            margin-top: 30px;
+            box-shadow: 0 0 10px rgba(255, 235, 59, 0.3);
+        }
+        
+        .edit-btn:hover {
+            background: rgba(255, 235, 59, 0.2);
+            box-shadow: 0 0 20px rgba(255, 235, 59, 0.5);
+        }
+        
+        .edit-form {
+            display: none;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+            color: var(--profile-color);
+        }
+        
+        .form-input {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: inherit;
+            color: white;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--profile-color);
+            box-shadow: 0 0 10px rgba(255, 235, 59, 0.3);
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 15px;
+        }
+        
+        .save-btn {
+            background: rgba(52, 168, 83, 0.2);
+            color: #34a853;
+            border: 1px solid #34a853;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            flex: 1;
+            box-shadow: 0 0 10px rgba(52, 168, 83, 0.3);
+        }
+        
+        .save-btn:hover {
+            background: rgba(52, 168, 83, 0.3);
+            box-shadow: 0 0 20px rgba(52, 168, 83, 0.5);
+        }
+        
+        .cancel-btn {
+            background: rgba(234, 67, 53, 0.2);
+            color: #ea4335;
+            border: 1px solid #ea4335;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            flex: 1;
+            box-shadow: 0 0 10px rgba(234, 67, 53, 0.3);
+        }
+        
+        .cancel-btn:hover {
+            background: rgba(234, 67, 53, 0.3);
+            box-shadow: 0 0 20px rgba(234, 67, 53, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <a href="dashboard.html" class="back-btn"></a>
+    
+    <div class="container">
+        <header class="glass-card neon-border">
+            <h1 class="neon-text">User Profile</h1>
+            <p>Manage your account information</p>
+        </header>
+        
+        <div class="profile-card glass-card neon-border">
+            <img src="https://via.placeholder.com/150" alt="Profile Picture" class="profile-pic" id="profilePic">
+            
+            <div class="profile-info" id="profileInfo">
+                <div class="info-group">
+                    <span class="info-label neon-text">Full Name</span>
+                    <div class="info-value" id="nameValue">John Doe</div>
+                </div>
+                <div class="info-group">
+                    <span class="info-label neon-text">Email</span>
+                    <div class="info-value" id="emailValue">john.doe@example.com</div>
+                </div>
+                <div class="info-group">
+                    <span class="info-label neon-text">Phone</span>
+                    <div class="info-value" id="phoneValue">+1 234 567 890</div>
+                </div>
+                <div class="info-group">
+                    <span class="info-label neon-text">Bio</span>
+                    <div class="info-value" id="bioValue">I'm a student passionate about learning new things.</div>
+                </div>
+                
+                <button class="edit-btn glass-card" id="editBtn" onclick="toggleEdit()">Edit Profile</button>
+            </div>
+            
+            <div class="edit-form" id="editForm">
+                <div class="form-group">
+                    <label class="form-label neon-text">Profile Picture URL</label>
+                    <input type="text" class="form-input" id="picInput" placeholder="Enter image URL">
+                </div>
+                <div class="form-group">
+                    <label class="form-label neon-text">Full Name</label>
+                    <input type="text" class="form-input" id="nameInput" placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label neon-text">Email</label>
+                    <input type="email" class="form-input" id="emailInput" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label class="form-label neon-text">Phone</label>
+                    <input type="tel" class="form-input" id="phoneInput" placeholder="Enter your phone number">
+                </div>
+                <div class="form-group">
+                    <label class="form-label neon-text">Bio</label>
+                    <textarea class="form-input" id="bioInput" rows="3" placeholder="Tell us about yourself"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button class="cancel-btn glass-card" onclick="toggleEdit()">Cancel</button>
+                    <button class="save-btn glass-card" onclick="saveProfile()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to toggle between view and edit modes
+        function toggleEdit() {
+            const profileInfo = document.getElementById('profileInfo');
+            const editForm = document.getElementById('editForm');
+            
+            if (profileInfo.style.display === 'none') {
+                // Switch to view mode
+                profileInfo.style.display = 'block';
+                editForm.style.display = 'none';
+            } else {
+                // Switch to edit mode and populate form fields
+                document.getElementById('picInput').value = document.getElementById('profilePic').src;
+                document.getElementById('nameInput').value = document.getElementById('nameValue').textContent;
+                document.getElementById('emailInput').value = document.getElementById('emailValue').textContent;
+                document.getElementById('phoneInput').value = document.getElementById('phoneValue').textContent;
+                document.getElementById('bioInput').value = document.getElementById('bioValue').textContent;
+                
+                profileInfo.style.display = 'none';
+                editForm.style.display = 'block';
+            }
+        }
+        
+        // Function to save profile changes
+        function saveProfile() {
+            // Update profile picture
+            const newPic = document.getElementById('picInput').value || "https://via.placeholder.com/150";
+            document.getElementById('profilePic').src = newPic;
+            
+            // Update other fields
+            document.getElementById('nameValue').textContent = document.getElementById('nameInput').value;
+            document.getElementById('emailValue').textContent = document.getElementById('emailInput').value;
+            document.getElementById('phoneValue').textContent = document.getElementById('phoneInput').value;
+            document.getElementById('bioValue').textContent = document.getElementById('bioInput').value;
+            
+            // Switch back to view mode
+            toggleEdit();
+            
+            // Show confirmation
+            const notification = document.createElement('div');
+            notification.textContent = 'Profile updated successfully!';
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.padding = '15px 25px';
+            notification.style.backgroundColor = '#34a853';
+            notification.style.color = 'white';
+            notification.style.borderRadius = '8px';
+            notification.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            notification.style.zIndex = '1000';
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
