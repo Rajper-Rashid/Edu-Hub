@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathametics MCQs</title>
+    <style>
+    	   :root {
+            --video-color: #00f2ff;
+            --notes-color: #00ff88;
+            --mcqs-color: #ff2d75;
+            --profile-color: #ffeb3b;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+        
+        .back-btn::before {
+            content: '←';
+            font-size: 1.2rem;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+        }
+        
+        .neon-text {
+            text-shadow: 0 0 5px currentColor, 0 0 10px currentColor;
+        }
+        
+        .neon-border {
+            position: relative;
+        }
+        
+        .neon-border::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 2px;
+            background: linear-gradient(45deg, var(--neon-color), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        /* Common CSS from video_Mathametics.html goes here */
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-top: 70px;
+        }
+        
+        header {
+            padding: 30px 0;
+            text-align: center;
+            margin-bottom: 40px;
+            --neon-color: var(--mcqs-color);
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: var(--mcqs-color);
+        }
+        
+        .quiz-container {
+            --neon-color: var(--mcqs-color);
+            padding: 30px;
+        }
+        
+        .question {
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .question:last-child {
+            border-bottom: none;
+        }
+        
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: var(--mcqs-color);
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .option input {
+            margin-right: 15px;
+            accent-color: var(--mcqs-color);
+            width: 18px;
+            height: 18px;
+        }
+        
+        .option label {
+            cursor: pointer;
+        }
+        
+        .submit-btn {
+            background: rgba(255, 45, 117, 0.1);
+            color: var(--mcqs-color);
+            border: 1px solid var(--mcqs-color);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            margin-top: 30px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 0 10px rgba(255, 45, 117, 0.3);
+        }
+        
+        .submit-btn:hover {
+            background: rgba(255, 45, 117, 0.2);
+            box-shadow: 0 0 20px rgba(255, 45, 117, 0.5);
+        }
+        
+        .result {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            --neon-color: var(--mcqs-color);
+            text-align: center;
+        }
+        
+        .result h3 {
+            margin-top: 0;
+            color: var(--mcqs-color);
+            font-size: 1.5rem;
+        }
+        
+        #scoreText {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        #correctAnswers {
+            text-align: left;
+            line-height: 1.6;
+        }
+        
+        .add-question {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .add-btn {
+            background: rgba(255, 45, 117, 0.1);
+            color: var(--mcqs-color);
+            border: 1px solid var(--mcqs-color);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 0 10px rgba(255, 45, 117, 0.3);
+        }
+        
+        .add-btn:hover {
+            background: rgba(255, 45, 117, 0.2);
+            box-shadow: 0 0 20px rgba(255, 45, 117, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <a href="dashboard.html" class="back-btn"></a>
+    
+    <div class="container">
+        <header class="glass-card neon-border">
+            <h1 class="neon-text">Mathametics MCQs</h1>
+            <p>Test your knowledge with these practice questions</p>
+        </header>
+        
+        <div class="quiz-container glass-card neon-border" id="quizContainer">
+            <!-- Questions will be added here dynamically -->
+        </div>
+        
+        <button class="submit-btn glass-card" id="submitBtn" onclick="showResult()">Submit Answers</button>
+        
+        <div class="result glass-card neon-border" id="resultContainer">
+            <h3 class="neon-text">Quiz Result</h3>
+            <p id="scoreText"></p>
+            <p id="correctAnswers"></p>
+        </div>
+        
+        <div class="add-question">
+            <button class="add-btn glass-card" onclick="addQuestion()">+ Add New Question</button>
+        </div>
+    </div>
+
+    <script>
+        // Array to store questions data
+        let questions = [
+            {
+                question: "Which of the following is a correct sentence?",
+                options: [
+                    "He don't like apples.",
+                    "He doesn't likes apples.",
+                    "He doesn't like apples.",
+                    "He not like apples."
+                ],
+                answer: 2
+            },
+            {
+                question: "Choose the correct spelling:",
+                options: [
+                    "Accomodate",
+                    "Acommodate",
+                    "Accommodate",
+                    "Acomodate"
+                ],
+                answer: 2
+            }
+        ];
+        
+        // Function to display questions
+        function displayQuestions() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = '';
+            
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.innerHTML = `
+                    <div class="question-text neon-text">${index + 1}. ${q.question}</div>
+                    <div class="options">
+                        ${q.options.map((opt, optIndex) => `
+                            <div class="option">
+                                <input type="radio" name="q${index}" id="q${index}o${optIndex}" value="${optIndex}">
+                                <label for="q${index}o${optIndex}">${opt}</label>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+        
+        // Function to show result
+        function showResult() {
+            let score = 0;
+            const results = [];
+            
+            questions.forEach((q, index) => {
+                const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
+                if (selectedOption) {
+                    const userAnswer = parseInt(selectedOption.value);
+                    if (userAnswer === q.answer) {
+                        score++;
+                        results.push(`✓ Question ${index + 1}: Correct`);
+                    } else {
+                        results.push(`✗ Question ${index + 1}: Incorrect (Correct answer: ${q.options[q.answer]})`);
+                    }
+                } else {
+                    results.push(`? Question ${index + 1}: Not answered (Correct answer: ${q.options[q.answer]})`);
+                }
+            });
+            
+            const resultContainer = document.getElementById('resultContainer');
+            const scoreText = document.getElementById('scoreText');
+            const correctAnswers = document.getElementById('correctAnswers');
+            
+            scoreText.textContent = `You scored ${score} out of ${questions.length}`;
+            correctAnswers.innerHTML = results.join('<br>');
+            resultContainer.style.display = 'block';
+            
+            // Scroll to result
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Function to add new question
+        function addQuestion() {
+            const question = prompt("Enter the question:");
+            if (question) {
+                const option1 = prompt("Enter option 1:");
+                const option2 = prompt("Enter option 2:");
+                const option3 = prompt("Enter option 3:");
+                const option4 = prompt("Enter option 4:");
+                const answer = prompt("Which option is correct? (1-4):");
+                
+                if (option1 && option2 && option3 && option4 && answer) {
+                    questions.push({
+                        question: question,
+                        options: [option1, option2, option3, option4],
+                        answer: parseInt(answer) - 1
+                    });
+                    
+                    displayQuestions();
+                }
+            }
+        }
+        
+        // Initial display
+        displayQuestions();
+    </script>
+</body>
+</html>
