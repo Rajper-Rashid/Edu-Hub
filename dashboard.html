@@ -493,103 +493,115 @@ a:hover {
 
     <div class="main-content">
         <div class="tabs-container">
-            <div class="tab active" data-tab="videos">
+          <a href="video.html">  <div class="tab active" data-tab="videos">
                 <div class="tab-icon">📺</div>
-            <a href="video.html">  <div class="tab-title">Videos</div> </a>
-            </div>
-            <div class="tab" data-tab="notes">
+              <div class="tab-title">Videos</div>
+            </div></a>
+         <a href="notes.html">   <div class="tab" data-tab="notes">
                 <div class="tab-icon">📝</div>
                 <div class="tab-title">Notes</div>
-            </div>
-            <div class="tab" data-tab="mcqs">
+            </div></a>
+          <a href="mcqs.html">   <div class="tab" data-tab="mcqs">
                 <div class="tab-icon">❓</div>
-                <div class="tab-title">MCQs</div>
-            </div>
-            <div class="tab" data-tab="contact">
+               <div class="tab-title">MCQs</div>
+            </div></a>
+           <a href="contact.html"> <div class="tab" data-tab="contact">
                 <div class="tab-icon">📧</div>
-                <div class="tab-title"><a href="contact.html">Contact Us</a></div>
-            </div>
-        </div>
-    <div class="footer">
-        <p>© 2023 EduPortal | All Rights Reserved | Designed with ❤️ for Learners</p>
-    </div>
+                <div class="tab-title">Contact Us</div>
+            </div> 
+        </div> </a>
+    </div> 
+    <!-- Footer -->
+<div class="footer">
+    <p>© 2023 EduPortal | All Rights Reserved | Designed with ❤️ for Learners</p>
+</div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Sidebar toggle
-            const menuBtn = document.querySelector('.menu-btn');
-            const sidebar = document.querySelector('.sidebar');
-            const sidebarOverlay = document.querySelector('.sidebar-overlay');
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
 
-            menuBtn.addEventListener('click', function() {
-                sidebar.classList.add('open');
-                sidebarOverlay.classList.add('open');
-            });
+<!-- App Script -->
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAst0D_TTLNV8z5aDI6f9ygbDkTdjMn6sM",
+    authDomain: "education-hub-dff77.firebaseapp.com",
+    projectId: "education-hub-dff77",
+    storageBucket: "education-hub-dff77.appspot.com",
+    messagingSenderId: "60385674016",
+    appId: "1:60385674016:web:b33272f86fef00f7204d45",
+    measurementId: "G-LLE19MTYBS"
+  };
 
-            sidebarOverlay.addEventListener('click', function() {
-                sidebar.classList.remove('open');
-                sidebarOverlay.classList.remove('open');
-            });
+  firebase.initializeApp(firebaseConfig);
 
-            // Submenu toggle
-            const menuItemsWithSubmenu = document.querySelectorAll('.sidebar-menu > li > a');
+  firebase.auth().onAuthStateChanged(user => {
+    if (!user) {
+      window.location.href = "index.html";
+    }
+  });
 
-            menuItemsWithSubmenu.forEach(item => {
-                if (item.nextElementSibling && item.nextElementSibling.classList.contains('sub-menu')) {
-                    item.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        
-                        const submenu = this.nextElementSibling;
-                        const arrow = this.querySelector('.arrow');
-                        
-                        submenu.classList.toggle('open');
-                        arrow.classList.toggle('down');
-                    });
-                }
-            });
+  document.addEventListener('DOMContentLoaded', function () {
+    const menuBtn = document.querySelector('.menu-btn');
+    const sidebar = document.querySelector('.sidebar');
+    const sidebarOverlay = document.querySelector('.sidebar-overlay');
 
-            // Tab switching
-            const tabs = document.querySelectorAll('.tab');
-            const tabContents = document.querySelectorAll('.tab-content');
+    menuBtn.addEventListener('click', function () {
+      sidebar.classList.add('open');
+      sidebarOverlay.classList.add('open');
+    });
 
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    // Remove active class from all tabs and contents
-                    tabs.forEach(t => t.classList.remove('active'));
-                    tabContents.forEach(c => c.classList.remove('active'));
-                    
-                    // Add active class to clicked tab and corresponding content
-                    this.classList.add('active');
-                    const tabId = this.getAttribute('data-tab');
-                    document.getElementById(tabId).classList.add('active');
-                });
-            });
+    sidebarOverlay.addEventListener('click', function () {
+      sidebar.classList.remove('open');
+      sidebarOverlay.classList.remove('open');
+    });
 
-            // Dark mode toggle
-            const darkModeToggle = document.getElementById('dark-mode-toggle');
-            
-            darkModeToggle.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.body.classList.toggle('dark-mode');
-                
-                // Save preference to localStorage
-                const isDarkMode = document.body.classList.contains('dark-mode');
-                localStorage.setItem('darkMode', isDarkMode);
-            });
+    const menuItemsWithSubmenu = document.querySelectorAll('.sidebar-menu > li > a');
 
-            // Check for saved dark mode preference
-            if (localStorage.getItem('darkMode') === 'true') {
-                document.body.classList.add('dark-mode');
-            }
-
-            // Add glow effect to active tab
-            setInterval(() => {
-                const activeTab = document.querySelector('.tab.active');
-                if (activeTab) {
-                    activeTab.style.boxShadow = `0 0 20px rgba(74, 118, 168, ${0.5 + Math.random() * 0.3})`;
-                }
-            }, 1000);
+    menuItemsWithSubmenu.forEach(item => {
+      if (item.nextElementSibling && item.nextElementSibling.classList.contains('sub-menu')) {
+        item.addEventListener('click', function (e) {
+          e.preventDefault();
+          const submenu = this.nextElementSibling;
+          const arrow = this.querySelector('.arrow');
+          submenu.classList.toggle('open');
+          arrow.classList.toggle('down');
         });
-    </script>
+      }
+    });
+
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function () {
+        tabs.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(c => c.classList.remove('active'));
+        this.classList.add('active');
+        const tabId = this.getAttribute('data-tab');
+        document.getElementById(tabId).classList.add('active');
+      });
+    });
+
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+
+    darkModeToggle.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.body.classList.toggle('dark-mode');
+      const isDarkMode = document.body.classList.contains('dark-mode');
+      localStorage.setItem('darkMode', isDarkMode);
+    });
+
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.body.classList.add('dark-mode');
+    }
+
+    setInterval(() => {
+      const activeTab = document.querySelector('.tab.active');
+      if (activeTab) {
+        activeTab.style.boxShadow = `0 0 20px rgba(74, 118, 168, ${0.5 + Math.random() * 0.3})`;
+      }
+    }, 1000);
+  });
+</script>
 </body>
 </html>
