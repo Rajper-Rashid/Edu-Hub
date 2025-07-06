@@ -1,85 +1,319 @@
 <!DOCTYPE html>
 <html lang="en" class="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Education Hub | Login</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Add Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-<script src="auth.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Education Hub | Auth</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <!-- Firebase v8 -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <style>
+  	.card {
+  background: rgba(255, 255, 255, 0.15); /* transparent white */
+  backdrop-filter: blur(15px); /* blur effect */
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+  padding: 30px;
+  margin: 20px auto;
+  max-width: 400px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group input.full-width,
+.btn.full-width {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: rgba(255, 255, 255, 0.25);
+  color: #000;
+}
+
+.form-group input::placeholder {
+  color: #444;
+}
+
+.btn.full-width {
+  background-color: #2575fc;
+  color: #fff;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn.full-width:hover {
+  background-color: #1a5fd6;
+}
+
+.form-navigation {
+  margin-top: 10px;
+}
+
+.logo {
+  max-width: 100px;
+  margin-bottom: 15px;
+}
+/* Input boxes ke darmiyan spacing */
+.auth-form .form-group {
+  margin-bottom: 15px;
+}
+
+/* Links ka underline hataana */
+a.text-link {
+  text-decoration: none;
+  color: #2575fc;
+  font-weight: 500;
+}
+
+a.text-link:hover {
+  text-decoration: underline; /* optional: sirf hover pe dikhana ho */
+}
+    .form-group input.full-width,
+    .btn.full-width {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    .form-navigation {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .form-navigation a {
+      color: var(--primary-color, #2575fc);
+      margin: 0 10px;
+      text-decoration: underline;
+      font-size: 14px;
+    }
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #ddd;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .theme-toggle i {
+      font-size: 18px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <img src="assets/logo.svg" alt="Education Hub Logo" class="logo">
-            <h1>Welcome to Education Hub</h1>
-            <p>Your gateway to knowledge and learning</p>
-        </header>
+  <div class="container">
+    <header class="header">
+      <img src="assets/logo.svg" alt="Education Hub Logo" class="logo">
+      <h1>Welcome to Education Hub</h1>
+      <p>Your gateway to knowledge and learning</p>
+    </header>
 
-        <main class="main-content">
-            <div class="card">
-                <h2>Login to your account</h2>
-                <form id="loginForm" class="auth-form">
-                    <div class="form-group">
-                        <label for="loginEmail">Email</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-envelope"></i>
-                            <input type="email" id="loginEmail" placeholder="Enter your email" required>
-                        </div>
-                        <span class="error-message" id="emailError"></span>
-                    </div>
+    <main class="main-content">
+      <div class="card">
 
-                    <div class="form-group">
-                        <label for="loginPassword">Password</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="loginPassword" placeholder="Enter your password" required>
-                            <i class="fas fa-eye toggle-password" data-target="loginPassword"></i>
-                        </div>
-                        <span class="error-message" id="passwordError"></span>
-                    </div>
+        <!-- ðŸ” Login Form -->
+        <form id="loginForm" class="auth-form">
+          <h2>Login</h2>
 
-                    <div class="form-options">
-                        <label class="checkbox-container">
-                            <input type="checkbox" id="rememberMe">
-                            <span class="checkmark"></span>
-                            Remember me
-                        </label>
-                        <a href="forgot.html" class="text-link">Forgot password?</a>
-                    </div>
+          <div class="form-group">
+            <input type="email" id="loginEmail" placeholder="Email" required class="full-width">
+          </div>
 
-                    <button type="submit" class="btn btn-primary" id="loginBtn">
-                        <span class="btn-text">Login</span>
-                        <span class="btn-loader hidden"><i class="fas fa-spinner fa-spin"></i></span>
-                    </button>
+          <div class="form-group" style="position: relative;">
+            <input type="password" id="loginPassword" placeholder="Password" required class="full-width">
+            <i class="fas fa-eye toggle-password" data-target="loginPassword" style="position:absolute; top: 50%; right: 15px; transform: translateY(-50%); cursor: pointer;"></i>
+          </div>
 
-                    <div class="divider">or continue with</div>
+          <button type="submit" class="btn btn-primary full-width">Login</button>
+          <div class="form-navigation" id="loginLinks"></div>
+        </form>
 
-                    <div class="social-logins">
-                        <button type="button" class="btn btn-social btn-google">
-                            <i class="fab fa-google"></i> Google
-                        </button>
-                        <button type="button" class="btn btn-social btn-microsoft">
-                            <i class="fab fa-microsoft"></i> Microsoft
-                        </button>
-                    </div>
+        <!-- ðŸ†• Signup Form -->
+        <form id="signupForm" class="auth-form" style="display: none;">
+          <h2>Create Account</h2>
 
-                    <div class="form-footer">
-                        Don't have an account? <a href="signup.html" class="text-link">Sign up</a>
-                    </div>
-                </form>
-            </div>
-        </main>
-    </div>
+          <div class="form-group">
+            <input type="text" id="signupName" placeholder="Full Name" required class="full-width">
+          </div>
+          <div class="form-group">
+            <input type="email" id="signupEmail" placeholder="Email" required class="full-width">
+          </div>
 
-    <div class="theme-toggle">
-        <i class="fas fa-moon"></i>
-    </div>
+          <div class="form-group" style="position: relative;">
+            <input type="password" id="signupPassword" placeholder="Password" required class="full-width">
+            <i class="fas fa-eye toggle-password" data-target="signupPassword" style="position:absolute; top: 50%; right: 15px; transform: translateY(-50%); cursor: pointer;"></i>
+          </div>
 
-    <script src="auth.js"></script>
+          <div class="form-group" style="position: relative;">
+            <input type="password" id="signupConfirm" placeholder="Confirm Password" required class="full-width">
+            <i class="fas fa-eye toggle-password" data-target="signupConfirm" style="position:absolute; top: 50%; right: 15px; transform: translateY(-50%); cursor: pointer;"></i>
+          </div>
+
+          <button type="submit" class="btn btn-primary full-width">Sign Up</button>
+          <div class="form-navigation" id="signupLinks"></div>
+        </form>
+
+        <!-- ðŸ” Forgot Password Form -->
+        <form id="forgotForm" class="auth-form" style="display: none;">
+          <h2>Reset Password</h2>
+          <div class="form-group">
+            <input type="email" id="forgotEmail" placeholder="Email" required class="full-width">
+          </div>
+
+          <button type="submit" class="btn btn-primary full-width">Send Reset Link</button>
+          <div class="form-navigation" id="forgotLinks"></div>
+        </form>
+
+      </div>
+    </main>
+  </div>
+
+  <div class="theme-toggle" id="themeToggle">
+    <i class="fas fa-moon"></i>
+  </div>
+
+  <script>
+  // ✅ Firebase Config
+  const firebaseConfig = {
+    apiKey: "AIzaSyAst0D_TTLNV8z5aDI6f9ygbDkTdjMn6sM",
+    authDomain: "education-hub-dff77.firebaseapp.com",
+    projectId: "education-hub-dff77",
+    storageBucket: "education-hub-dff77.appspot.com",
+    messagingSenderId: "60385674016",
+    appId: "1:60385674016:web:b33272f86fef00f7204d45"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  // ✅ Show Bottom Notification
+  function showMessage(msg) {
+    const notify = document.createElement('div');
+    notify.textContent = msg;
+    notify.style.position = 'fixed';
+    notify.style.bottom = '20px';
+    notify.style.left = '50%';
+    notify.style.transform = 'translateX(-50%)';
+    notify.style.background = 'rgba(0,0,0,0.85)';
+    notify.style.color = '#fff';
+    notify.style.padding = '12px 24px';
+    notify.style.borderRadius = '8px';
+    notify.style.fontSize = '14px';
+    notify.style.zIndex = '9999';
+    notify.style.transition = 'opacity 0.3s ease';
+    document.body.appendChild(notify);
+
+    setTimeout(() => {
+      notify.style.opacity = '0';
+      setTimeout(() => {
+        document.body.removeChild(notify);
+      }, 300);
+    }, 1500);
+  }
+
+  // 👁️ Password toggle
+  document.querySelectorAll('.toggle-password').forEach(icon => {
+    icon.addEventListener('click', () => {
+      const input = document.getElementById(icon.dataset.target);
+      input.type = input.type === 'password' ? 'text' : 'password';
+      icon.classList.toggle('fa-eye-slash');
+    });
+  });
+
+  // 🌙 Dark mode
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+  });
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.classList.add('dark');
+  }
+
+  // 🔁 Form Switching
+  function showForm(formName) {
+    ['loginForm', 'signupForm', 'forgotForm'].forEach(id => {
+      document.getElementById(id).style.display = id === formName + 'Form' ? 'block' : 'none';
+    });
+    updateLinks(formName);
+  }
+
+  function updateLinks(current) {
+    const links = {
+      login: `<a href="#" onclick="showForm('signup')">Sign Up</a> | <a href="#" onclick="showForm('forgot')">Forgot Password</a>`,
+      signup: `<a href="#" onclick="showForm('login')">Login</a> | <a href="#" onclick="showForm('forgot')">Forgot Password</a>`,
+      forgot: `<a href="#" onclick="showForm('login')">Login</a> | <a href="#" onclick="showForm('signup')">Sign Up</a>`
+    };
+    document.getElementById('loginLinks').innerHTML = links.login;
+    document.getElementById('signupLinks').innerHTML = links.signup;
+    document.getElementById('forgotLinks').innerHTML = links.forgot;
+    document.getElementById('loginLinks').style.display = current === 'login' ? 'block' : 'none';
+    document.getElementById('signupLinks').style.display = current === 'signup' ? 'block' : 'none';
+    document.getElementById('forgotLinks').style.display = current === 'forgot' ? 'block' : 'none';
+  }
+
+  // ✅ Login
+  document.getElementById('loginForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() => {
+        showMessage('✅ Successfully Logged In');
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 1500);
+      })
+      .catch(err => showMessage('❌ ' + err.message));
+  });
+
+  // ✅ Signup
+  document.getElementById('signupForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('signupName').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
+    const pass = document.getElementById('signupPassword').value;
+    const confirm = document.getElementById('signupConfirm').value;
+
+    if (pass !== confirm) return showMessage("❌ Passwords do not match!");
+
+    auth.createUserWithEmailAndPassword(email, pass)
+      .then(cred => {
+        return db.collection('users').doc(cred.user.uid).set({
+          name,
+          email,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      })
+      .then(() => {
+        showMessage('✅ Account created successfully');
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 1500);
+      })
+      .catch(err => showMessage('❌ ' + err.message));
+  });
+
+  // ✅ Forgot Password
+  document.getElementById('forgotForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const email = document.getElementById('forgotEmail').value.trim();
+    auth.sendPasswordResetEmail(email)
+      .then(() => showMessage('📧 Reset link sent to your email'))
+      .catch(err => showMessage('❌ ' + err.message));
+  });
+
+  // 📌 Init
+  showForm('login');
+</script>
 </body>
 </html>
