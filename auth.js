@@ -1,3 +1,37 @@
+console.log("auth.js is loaded ✅");
+
+document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        console.log("Login form found ✅");
+
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // 🛑 Stop reload
+
+            console.log("Login form submitted ✅");
+
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+
+            if (!email || !password) {
+                alert("Email and Password required");
+                return;
+            }
+
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    console.log("Login successful ✅ Redirecting...");
+                    window.location.href = 'dashboard.html';
+                })
+                .catch(error => {
+                    console.log("Firebase login error ❌", error);
+                    alert("Login failed: " + error.message);
+                });
+        });
+    } else {
+        console.log("Login form NOT found ❌");
+    }
+});
 // Initialize Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyAst0D_TTLNV8z5aDI6f9ygbDkTdjMn6sM",
